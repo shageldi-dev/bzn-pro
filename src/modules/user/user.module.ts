@@ -4,9 +4,10 @@ import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entity/user.entity';
 import { JwtModule } from '@nestjs/jwt';
+import PermissionEntity from '../roles/entity/permission.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), JwtModule],
+  imports: [TypeOrmModule.forFeature([User, PermissionEntity]), JwtModule],
   controllers: [UserController],
   providers: [UserService],
   exports: [UserService],

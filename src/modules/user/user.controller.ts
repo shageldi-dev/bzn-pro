@@ -14,6 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from 'src/guard/auth.guard';
 import { RequiredPermissions } from 'src/decorator/permission.decorator';
 import { RoleAction, RoleSubject } from '../roles/roles.constant';
+import { PermissionsGuard } from 'src/guard/permission.guard';
 
 /**
  * whatever the string pass in controller decorator it will be appended to
@@ -33,13 +34,13 @@ export class UserController {
    */
 
   @Post()
-  @UseGuards(AuthGuard)
   @RequiredPermissions([
     {
       action: RoleAction.CREATE,
       subject: RoleSubject.USER,
     },
   ])
+  @UseGuards(AuthGuard, PermissionsGuard)
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
   }

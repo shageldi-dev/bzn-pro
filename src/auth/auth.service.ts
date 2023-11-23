@@ -12,8 +12,9 @@ export default class AuthService {
   async signIn(username, pass) {
     const user = await this.usersService.findOne(username);
     const isPassMatch = await user.validatePassword(pass);
+    console.log(user, isPassMatch);
     if (!isPassMatch) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Password not match');
     }
     const payload = { sub: user.id, username: user.username };
     return {
