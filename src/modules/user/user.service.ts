@@ -31,7 +31,7 @@ export class UserService {
       user.password = await User.hashPassword(createUserDto.password);
       user.gender = createUserDto.gender;
       user.roleId = createUserDto.roleId;
-      return this.userRepository.save(user);
+      return await this.userRepository.save(user);
     } catch (err) {
       throw new BadRequestException(err);
     }
