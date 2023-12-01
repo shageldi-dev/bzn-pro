@@ -6,9 +6,9 @@ import { RoleAction, RoleSubject } from 'src/modules/roles/roles.constant';
 export default class CreatePermissions implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
     await connection.query('SET CONSTRAINTS ALL DEFERRED');
-    // await connection.manager.query(
-    //   `TRUNCATE TABLE "permission_entity" RESTART IDENTITY CASCADE`,
-    // );
+    await connection.manager.query(
+      `TRUNCATE TABLE "permission_entity" RESTART IDENTITY CASCADE`,
+    );
     await connection
       .createQueryBuilder()
       .insert()

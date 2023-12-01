@@ -4,6 +4,8 @@ import { UserModule } from './modules/user/user.module';
 import { NotificationModule } from './modules/notification/notification.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RolesModule } from './modules/roles/roles.module';
+import { AutopartsModule } from './modules/autoparts/autoparts.module';
+import { CategoriesModule } from './modules/categories/categories.module';
 import AuthModule from './auth/auth.module';
 
 @Module({
@@ -30,6 +32,8 @@ import AuthModule from './auth/auth.module';
     UserModule,
     NotificationModule,
     RolesModule,
+    AutopartsModule,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [],
