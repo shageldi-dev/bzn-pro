@@ -21,14 +21,14 @@ export class UserService {
    * we have defined what are the keys we are expecting from body
    * @returns promise of user
    */
-  createUser(createUserDto: CreateUserDto): Promise<User> {
+  async createUser(createUserDto: CreateUserDto): Promise<User> {
     try {
       const user: User = new User();
       user.name = createUserDto.name;
       user.age = createUserDto.age;
       user.email = createUserDto.email;
       user.username = createUserDto.username;
-      user.password = createUserDto.password;
+      user.password = await User.hashPassword(createUserDto.password);
       user.gender = createUserDto.gender;
       user.roleId = createUserDto.roleId;
       return this.userRepository.save(user);
