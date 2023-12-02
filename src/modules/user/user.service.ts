@@ -22,6 +22,12 @@ export class UserService {
    * @returns promise of user
    */
   async createUser(createUserDto: CreateUserDto): Promise<User> {
+    const oldUser = await this.userRepository.find({where: {username: createUserDto.username}})
+    
+    if (oldUser.length > 0) {
+      throw new BadRequestException('username is already taken')
+    }
+
     try {
       const user: User = new User();
       user.name = createUserDto.name;
@@ -31,7 +37,10 @@ export class UserService {
       user.password = await User.hashPassword(createUserDto.password);
       user.gender = createUserDto.gender;
       user.roleId = createUserDto.roleId;
-      return await this.userRepository.save(user);
+      const newUser = await this.userRepository.save(user);
+      delete newUser.password;
+
+      return newUser;
     } catch (err) {
       throw new BadRequestException(err);
     }

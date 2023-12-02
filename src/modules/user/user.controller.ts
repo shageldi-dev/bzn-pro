@@ -42,6 +42,7 @@ export class UserController {
   ])
   @UseGuards(AuthGuard, PermissionsGuard)
   create(@Body() createUserDto: CreateUserDto) {
+    // return console.log(createUserDto)
     return this.userService.createUser(createUserDto);
   }
 
