@@ -10,8 +10,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({
     transform: true,
     skipMissingProperties: true
-  }))
+  }));
   // app.useGlobalFilters(new GlobalExceptionFilter());
+  app.enableCors()
   await app.listen(process.env.API_PORT || 3030);
 }
 bootstrap();
