@@ -2,10 +2,15 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGenerat
 import { IsUsed } from "../enums/isused.enum";
 import { FrontBack, Side } from "../enums/side.enum";
 import { Status } from "../enums/status.enum";
-import { CarOption } from "./car-option.entity";
+import { Brand } from "./brand.entity";
+import { Model } from "./model.entity";
+import { Generation } from "./generation.entity";
+import { Manufacturer } from "./manufacturer.entity";
 
 @Entity()
 export class Autopart { 
+
+    /* FOREIGN KEYS */
     
     @PrimaryGeneratedColumn()
     autopart_id: number;
@@ -19,30 +24,24 @@ export class Autopart {
     @Column({nullable: true})
     generation_id: number;
 
-    @Column({nullable: true})
-    genversion_id: number;
-
-    @Column({nullable: true})
-    body_id: number;
-
-    @Column({nullable: true})
-    engine_id: number;
 
     @Column({nullable: true})
     manufacturer_id: number;
 
+    /* END FOREIGN KEYS */
+
+    /* REQUIRED COLUMNS */
+
     @Column()
     name: string;
+
+    /* NULLABLE COLUMNS */
 
     @Column({nullable: true, type: 'enum', enum: FrontBack})
     front_back: FrontBack;
 
     @Column({nullable: true, type: 'enum', enum: Side})
     left_right: Side;
-
-
-
-    // category_id: number;
 
     @Column({nullable: true})
     number_of_part: number;
@@ -73,7 +72,6 @@ export class Autopart {
 
     @Column({nullable: true})
     site_link: string;
-    // partname_id: number;  
 
     @Column({nullable: true})
     video: string;
@@ -101,31 +99,21 @@ export class Autopart {
     updated_at: Date;
     
 
-    @ManyToOne(() => CarOption, carOption => carOption.autoParts)
-    @JoinColumn({name: 'brand_id'})
-    carOption: CarOption
+    /* RELATIONSHIPS */    
 
-    
+    @ManyToOne(() => Brand, brand => brand.autoparts)
+    @JoinColumn({name: 'brand_id'}) 
+    brand: Brand;
 
-    
-    @ManyToOne(() => CarOption, carOption => carOption.autoParts)
+    @ManyToOne(() => Model, model => model.autoparts) 
     @JoinColumn({name: 'model_id'})
-    model: CarOption
+    model: Model
 
-    
-    @ManyToOne(() => CarOption, carOption => carOption.autoParts)
+    @ManyToOne(() => Generation, generation => generation.autoparts)
     @JoinColumn({name: 'generation_id'})
-    generation: CarOption
-
-    @ManyToOne(() => CarOption, carOption => carOption.autoParts)
-    @JoinColumn({name: 'genversion_id'})
-    genVersion: CarOption
-
-    @ManyToOne(() => CarOption, carOption => carOption.autoParts)
-    @JoinColumn({name: 'body_id'})
-    body: CarOption
-
-    @ManyToOne(() => CarOption, carOption => carOption.autoParts)
-    @JoinColumn({name: 'engine_id'})
-    engine: CarOption
+    generation: Generation
+   
+    @ManyToOne(() => Manufacturer, manufacturer => manufacturer.autoparts)
+    @JoinColumn({name: 'manufacturer_id'})
+    manufacturer: Manufacturer;
 }

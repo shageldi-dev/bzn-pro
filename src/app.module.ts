@@ -7,6 +7,9 @@ import { RolesModule } from './modules/roles/roles.module';
 import { AutopartsModule } from './modules/autoparts/autoparts.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import AuthModule from './auth/auth.module';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import { APP_FILTER } from '@nestjs/core';
+import { CarOptionsModule } from './modules/car-options/car-options.module';
 
 @Module({
   imports: [
@@ -34,9 +37,11 @@ import AuthModule from './auth/auth.module';
     RolesModule,
     AutopartsModule,
     CategoriesModule,
+    CarOptionsModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+  ],
   exports: [],
 })
 export class AppModule {}
