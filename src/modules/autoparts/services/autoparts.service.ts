@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateAutopartDto } from './dto/create-autopart.dto';
-import { UpdateAutopartDto } from './dto/update-autopart.dto';
+import { CreateAutopartDto } from '../dto/create-autopart.dto';
+import { UpdateAutopartDto } from '../dto/update-autopart.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { Autopart } from './entities/autopart.entity';
-import { Brand } from './entities/brand.entity';
-import { Model } from './entities/model.entity';
-import { Generation } from './entities/generation.entity';
-import { Manufacturer } from './entities/manufacturer.entity';
+import { Autopart } from '../entities/autopart.entity';
+import { Brand } from '../entities/brand.entity';
+import { Model } from '../entities/model.entity';
+import { Generation } from '../entities/generation.entity';
+import { Manufacturer } from '../entities/manufacturer.entity';
 
 @Injectable()
 export class AutopartsService {

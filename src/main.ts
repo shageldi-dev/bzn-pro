@@ -12,7 +12,7 @@ async function bootstrap() {
     skipMissingProperties: true
   }));
   // app.useGlobalFilters(new GlobalExceptionFilter());
-  app.enableCors()
+  app.enableCors();
   await app.listen(process.env.API_PORT || 3030);
 }
 bootstrap();

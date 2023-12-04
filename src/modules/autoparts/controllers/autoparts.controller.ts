@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, BadGatewayException, Put, UseInterceptors, UploadedFile } from '@nestjs/common';
-import { AutopartsService } from './autoparts.service';
-import { CreateAutopartDto } from './dto/create-autopart.dto';
-import { UpdateAutopartDto } from './dto/update-autopart.dto';
+import { AutopartsService } from '../services/autoparts.service';
+import { CreateAutopartDto } from '../dto/create-autopart.dto';
+import { UpdateAutopartDto } from '../dto/update-autopart.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('autoparts')

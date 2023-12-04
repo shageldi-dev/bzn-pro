@@ -18,7 +18,6 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   signIn(@Body() signInDto: Record<string, any>) {
-    console.log(signInDto);
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
 
@@ -26,5 +25,11 @@ export class AuthController {
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('permissions')
+  GetPermission(@Request() req) {
+    return this.authService.getPermissions(req.user.id)
   }
 }

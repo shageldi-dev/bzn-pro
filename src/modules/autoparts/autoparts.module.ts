@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AutopartsService } from './autoparts.service';
-import { AutopartsController } from './autoparts.controller';
+import { AutopartsService } from './services/autoparts.service';
+import { AutopartsController } from './controllers/autoparts.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Autopart } from './entities/autopart.entity';
 import { Brand } from './entities/brand.entity';
