@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Autopart } from "./autopart.entity";
+import { Autopart } from "../../autoparts/entities/autopart.entity";
 import { Generation } from "./generation.entity";
 import { Brand } from "./brand.entity";
 

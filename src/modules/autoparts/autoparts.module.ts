@@ -3,19 +3,15 @@ import { AutopartsService } from './services/autoparts.service';
 import { AutopartsController } from './controllers/autoparts.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Autopart } from './entities/autopart.entity';
-import { Brand } from './entities/brand.entity';
-import { Model } from './entities/model.entity';
-import { Generation } from './entities/generation.entity';
+import { Brand } from '../car-options/entities/brand.entity';
+import { Model } from '../car-options/entities/model.entity';
+import { Generation } from '../car-options/entities/generation.entity';
 import { Manufacturer } from './entities/manufacturer.entity';
-import { MulterModule } from '@nestjs/platform-express';
-import * as multer from 'multer'
+import { Image } from './entities/image.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Autopart, Brand, Model, Generation, Manufacturer]),
-    MulterModule.register({
-      dest: './uploads'
-    })
+    TypeOrmModule.forFeature([Autopart, Brand, Model, Generation, Manufacturer, Image]),
   ],
   controllers: [AutopartsController],
   providers: [AutopartsService],

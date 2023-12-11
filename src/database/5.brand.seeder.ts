@@ -1,8 +1,8 @@
 import { Factory, Seeder } from 'typeorm-seeding';
 import { Connection } from 'typeorm';
-import { Brand } from 'src/modules/autoparts/entities/brand.entity';
-import { Model } from 'src/modules/autoparts/entities/model.entity';
-import { Generation } from 'src/modules/autoparts/entities/generation.entity';
+import { Brand } from 'src/modules/car-options/entities/brand.entity';
+import { Model } from 'src/modules/car-options/entities/model.entity';
+import { Generation } from 'src/modules/car-options/entities/generation.entity';
 
 
 export default class CreateCarOptions implements Seeder {

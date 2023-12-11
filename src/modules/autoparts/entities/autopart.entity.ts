@@ -1,11 +1,13 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { IsUsed } from "../enums/isused.enum";
 import { FrontBack, Side } from "../enums/side.enum";
 import { Status } from "../enums/status.enum";
-import { Brand } from "./brand.entity";
-import { Model } from "./model.entity";
-import { Generation } from "./generation.entity";
+import { Brand } from "../../car-options/entities/brand.entity";
+import { Model } from "../../car-options/entities/model.entity";
+import { Generation } from "../../car-options/entities/generation.entity";
 import { Manufacturer } from "./manufacturer.entity";
+import { Image } from "./image.entity";
+import { Category } from "src/modules/categories/entities/category.entity";
 
 @Entity()
 export class Autopart { 
@@ -23,6 +25,9 @@ export class Autopart {
 
     @Column({nullable: true})
     generation_id: number;
+
+    @Column({nullable: true})
+    category_id: number;
 
 
     @Column({nullable: true})
@@ -116,4 +121,11 @@ export class Autopart {
     @ManyToOne(() => Manufacturer, manufacturer => manufacturer.autoparts)
     @JoinColumn({name: 'manufacturer_id'})
     manufacturer: Manufacturer;
+
+    @ManyToOne(() => Category, category => category.autoparts)
+    @JoinColumn({name: 'category_id'})
+    category: Category;
+
+    @OneToMany(() => Image, image => image.autopart)
+    images: Image[];
 }

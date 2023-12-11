@@ -4,12 +4,14 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import RoleEntity from 'src/modules/roles/entity/role.entity';
+import { Storage } from 'src/modules/storage/entitities/storage.entity';
 
 @Entity()
 @Unique('username_unique_constraint', ['username'])
@@ -43,8 +45,6 @@ export class User {
    */
   gender: string;
 
-  @ManyToOne(() => RoleEntity, (role) => role.users)
-  role: RoleEntity;
 
   @Column({ type: 'int' })
   roleId: number;
@@ -64,6 +64,20 @@ export class User {
 
   @Column({ type: 'boolean', default: false })
   deleted: boolean;
+
+
+  /* ******  RELATIONS  ******* */
+  @ManyToOne(() => RoleEntity, (role) => role.users)
+  role: RoleEntity;
+
+  @OneToMany(() => Storage, storage => storage.creator)
+  craeted_storages: Storage[];
+
+  @OneToMany(() => Storage, storage => storage.updater)
+  updated_storages: Storage[];
+
+
+  /* *******  LIFECYCLE HOOKS  ********* */
 
   @BeforeInsert()
   async hashPasswordBeforeInsert() {

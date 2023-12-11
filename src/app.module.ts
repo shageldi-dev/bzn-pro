@@ -10,6 +10,9 @@ import AuthModule from './auth/auth.module';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { APP_FILTER } from '@nestjs/core';
 import { CarOptionsModule } from './modules/car-options/car-options.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { StorageModule } from './modules/storage/storage.module';
 
 @Module({
   imports: [
@@ -38,6 +41,10 @@ import { CarOptionsModule } from './modules/car-options/car-options.module';
     AutopartsModule,
     CategoriesModule,
     CarOptionsModule,
+    StorageModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads')
+    })
   ],
   controllers: [],
   providers: [

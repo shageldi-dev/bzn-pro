@@ -1,5 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { ImageSize } from "../enums/image-size.enum";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Autopart } from "./autopart.entity";
 
 @Entity()
 export class Image {
@@ -11,20 +11,26 @@ export class Image {
     autopart_id: number;
 
     @Column({type: 'varchar', 'length': 255})
-    src: string;
+    src_original: string;
 
-    @Column({type: 'varchar', 'length': 255})
+    @Column({type: 'varchar', 'length': 255, nullable: true})
+    src_small : string;
+
+    @Column({type: 'varchar', 'length': 255, nullable: true})
     blurhash: string;
 
-    @Column()
+    @Column({nullable: true})
     width: number;
 
-    @Column()
+    @Column({nullable: true})
     height: number;
 
-    @Column({type: 'enum', enum: ImageSize})
-    image_type: ImageSize;
-
-    @Column()
+    @Column({nullable: true})
     is_main: boolean;
+
+    @ManyToOne(() => Autopart, autopart => autopart.images, {
+        onDelete: 'CASCADE'
+    })
+    @JoinColumn({name: "autopart_id"})
+    autopart: Autopart;
 }
