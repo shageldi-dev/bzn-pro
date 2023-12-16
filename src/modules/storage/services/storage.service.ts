@@ -12,11 +12,37 @@ export class StorageService {
     ) {}
 
     getAll() {
-        return this.storageRepo.find()
+        return this.storageRepo.find({relations: ['creator', 'updater']})
     }
 
     async getById(id: number) {
-        const storage = await this.storageRepo.findOneBy({id})
+        const storage = await this.storageRepo.createQueryBuilder("storage")
+        
+        .leftJoinAndSelect("storage.updater", "updater")
+        .leftJoinAndSelect("storage.creator", "creator")
+        .select([
+            "storage.id",
+            "storage.name_tm",
+            "storage.name_en",
+            "storage.name_ru",
+            "storage.website",
+            "storage.phone",
+            "storage.abbr",
+            "storage.description_tm",
+            "storage.description_en",
+            "storage.description_ru",
+            "bar_code_prefix",
+	        "is_hidden",
+	        "is_issue_point",
+	        "is_income_point",
+            "updater.name",
+            "updater.email",
+            "creator.name",
+            "creator.email"
+            
+        ])
+        .where("storage.id = :id", {id})
+        .getOne()
         if (!storage) throw new NotFoundException('storage not found')
         return storage
     }
