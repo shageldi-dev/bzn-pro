@@ -34,7 +34,7 @@ export class Section {
         type: 'enum',
         enum: SectionType
     })
-    section_type: SectionType;
+    section_type: string;
 
     @Column({nullable: true})
     space_count: number;

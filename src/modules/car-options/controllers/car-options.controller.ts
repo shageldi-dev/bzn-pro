@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { CarOptionsService } from '../car-options.service';
+import { CarOptionsService } from '../services/car-options.service';
 import { CreateCarOptionDto } from '../dto/create-car-option.dto';
 import { UpdateCarOptionDto } from '../dto/update-car-option.dto';
 

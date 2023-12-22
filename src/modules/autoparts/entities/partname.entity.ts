@@ -10,13 +10,13 @@ export class PartName {
     @Column({nullable: true})
     group_id: number;
     
-    @Column({type: 'varchar', length: 255})
+    @Column({type: 'varchar', length: 255, unique: true})
     name_tm: string;
 
-    @Column({type: 'varchar', length: 255})
+    @Column({type: 'varchar', length: 255, unique: true})
     name_en: string;
 
-    @Column({type: 'varchar', length: 255})
+    @Column({type: 'varchar', length: 255, unique: true})
     name_ru: string;
 
     @CreateDateColumn({

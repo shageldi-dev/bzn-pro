@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Autopart } from "./autopart.entity";
+import { Autopart } from "../../autoparts/entities/autopart.entity";
 
 @Entity()
 export class Manufacturer {

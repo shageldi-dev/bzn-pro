@@ -13,6 +13,7 @@ import { CarOptionsModule } from './modules/car-options/car-options.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { StorageModule } from './modules/storage/storage.module';
+import { PriceModule } from './modules/price/price.module';
 
 @Module({
   imports: [
@@ -44,7 +45,8 @@ import { StorageModule } from './modules/storage/storage.module';
     StorageModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads')
-    })
+    }),
+    PriceModule
   ],
   controllers: [],
   providers: [

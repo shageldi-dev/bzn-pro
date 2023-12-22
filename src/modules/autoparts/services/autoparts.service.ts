@@ -7,13 +7,13 @@ import { Autopart } from '../entities/autopart.entity';
 import { Brand } from '../../car-options/entities/brand.entity';
 import { Model } from '../../car-options/entities/model.entity';
 import { Generation } from '../../car-options/entities/generation.entity';
-import { Manufacturer } from '../entities/manufacturer.entity';
+import { Manufacturer } from '../../car-options/entities/manufacturer.entity';
 import { Image } from '../entities/image.entity';
 import * as sharp from 'sharp';
 import { encode } from 'blurhash'
-import { readFileSync } from 'fs';
 import * as path from 'path';
 import { unlink } from 'fs/promises';
+import { Price } from 'src/modules/price/entities/price.entity';
 
 @Injectable()
 export class AutopartsService {
@@ -23,13 +23,13 @@ export class AutopartsService {
      @InjectRepository(Model) private readonly modelRepo: Repository<Model>,
      @InjectRepository(Generation) private readonly generationRepo: Repository<Generation>,
      @InjectRepository(Manufacturer) private readonly manufacturerRepo: Repository<Manufacturer>,
-     @InjectRepository(Image) private readonly imageRepo: Repository<Image>
+     @InjectRepository(Image) private readonly imageRepo: Repository<Image>,
   ) {}
 
   async create(body: CreateAutopartDto, files: Express.Multer.File[]) {
+
     
-    
-    const autoPart = this.repo.create(body)
+    const autoPart = this.repo.create(body as Autopart)
     await this.repo.save(autoPart)
 
 

@@ -1,13 +1,15 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { IsUsed } from "../enums/isused.enum";
 import { FrontBack, Side } from "../enums/side.enum";
 import { Status } from "../enums/status.enum";
 import { Brand } from "../../car-options/entities/brand.entity";
 import { Model } from "../../car-options/entities/model.entity";
 import { Generation } from "../../car-options/entities/generation.entity";
-import { Manufacturer } from "./manufacturer.entity";
+import { Manufacturer } from "../../car-options/entities/manufacturer.entity";
 import { Image } from "./image.entity";
 import { Category } from "src/modules/categories/entities/category.entity";
+import { Price } from "src/modules/price/entities/price.entity";
+import { Length, Max, Min } from "class-validator";
 
 @Entity()
 export class Autopart { 
@@ -33,6 +35,9 @@ export class Autopart {
     @Column({nullable: true})
     manufacturer_id: number;
 
+    @Column({nullable: true})
+    price_id: number;
+
     /* END FOREIGN KEYS */
 
     /* REQUIRED COLUMNS */
@@ -42,44 +47,45 @@ export class Autopart {
 
     /* NULLABLE COLUMNS */
 
-    @Column({nullable: true, type: 'enum', enum: FrontBack})
-    front_back: FrontBack;
-
-    @Column({nullable: true, type: 'enum', enum: Side})
-    left_right: Side;
-
-    @Column({nullable: true})
-    number_of_part: number;
-
-    @Column({nullable: true})
-    year: number;
-
     @Column({nullable: true})
     color: string;
 
     @Column({nullable: true})
     comment: string;
 
-    @Column({nullable: true})
-    cross_number: number;
+    @Column({type: 'varchar', length: 100, nullable: true})
+    cross_number: string;
 
-    @Column({nullable: true})
-    note: string; 
+    @Column({default: false})
+    is_archive: boolean;
+
+    @Column({
+        type: 'enum',
+        enum: IsUsed,
+        default: IsUsed.NEW
+    })
+    is_used: IsUsed; 
+
+    @Column({nullable: true, type: 'enum', enum: FrontBack})
+    front_back: FrontBack;
+
+    @Column({nullable: true, type: 'enum', enum: Side})
+    left_right: Side;
+
+    @Column({type: 'varchar', length: 100, nullable: true})
+    manufacturer_no: string;
 
     @Column({nullable: true})
     marking: string;
 
-    @Column({default: false})
-    is_archive: boolean;
+    @Column({nullable: true})
+    note: string; 
 
     @Column({default: false})
     not_for_export: boolean; 
 
     @Column({nullable: true})
-    site_link: string;
-
-    @Column({nullable: true})
-    video: string;
+    number_of_part: number;
 
     @Column({ nullable: true })
     old_bar_code: string;
@@ -87,15 +93,14 @@ export class Autopart {
     @Column({ nullable: true })
     old_data: string; 
 
-    @Column({
-        type: 'enum',
-        enum: IsUsed,
-        default: IsUsed.NEW
-    })
-    is_used: IsUsed;  
+    @Column({nullable: true})
+    site_link: string;
 
-    @Column({ type: 'enum', enum: Status, })
-    status: string;
+    @Column({ type: 'enum', enum: Status, nullable: true})
+    status: Status;
+
+    @Column({nullable: true})
+    year: number;
     
     @CreateDateColumn({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     created_at: Date;
@@ -128,4 +133,10 @@ export class Autopart {
 
     @OneToMany(() => Image, image => image.autopart)
     images: Image[];
+
+    @OneToOne(() => Price, price => price.autopart)
+    @JoinColumn({name: 'price_id '})
+    price: Price;
 }
+  
+

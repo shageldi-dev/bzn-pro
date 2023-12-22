@@ -38,7 +38,7 @@ export class StorageService {
             "updater.name",
             "updater.email",
             "creator.name",
-            "creator.email"
+            "creator.email" 
             
         ])
         .where("storage.id = :id", {id})

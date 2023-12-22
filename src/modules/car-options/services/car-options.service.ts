@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCarOptionDto } from './dto/create-car-option.dto';
-import { UpdateCarOptionDto } from './dto/update-car-option.dto';
+import { CreateCarOptionDto } from '../dto/create-car-option.dto';
+import { UpdateCarOptionDto } from '../dto/update-car-option.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Brand } from './entities/brand.entity';
+import { Brand } from '../entities/brand.entity';
 import { Generated, Repository } from 'typeorm';
-import { Model } from './entities/model.entity';
-import { Generation } from './entities/generation.entity';
+import { Model } from '../entities/model.entity';
+import { Generation } from '../entities/generation.entity';
 
 @Injectable()
 export class CarOptionsService {
