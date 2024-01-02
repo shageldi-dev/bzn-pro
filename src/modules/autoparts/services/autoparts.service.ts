@@ -33,7 +33,7 @@ export class AutopartsService {
     await this.repo.save(autoPart)
 
 
-    files.forEach(async (file, index) => {
+    /* files.forEach(async (file, index) => {
       const filePath = path.resolve('uploads', 'autopart-images', file.filename)
       
       try {
@@ -72,7 +72,7 @@ export class AutopartsService {
       }
 
       await this.imageRepo.save(image)
-    })
+    }) */
 
     return autoPart
   }

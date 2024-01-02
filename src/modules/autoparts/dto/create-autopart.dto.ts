@@ -6,32 +6,32 @@ import { Exclude, Transform, Type } from "class-transformer";
 
 export class CreateAutopartDto {
     
-    @Transform(params => params.value === '' ? null : +params.value)
+    @Transform(params => (params.value === '' || params.value === null)  ? null : +params.value)
     @IsInt()
     @IsOptional()
     brand_id: number;
 
-    @Transform(params => params.value === '' ? null: +params.value)
+    @Transform(params => (params.value === '' || params.value === null) ? null: +params.value)
     @IsInt()
     @IsOptional()
     model_id: number;
 
-    @Transform(params => params.value === '' ? null: +params.value)
+    @Transform(params => (params.value === '' || params.value === null) ? null: +params.value)
     @IsInt()
     @IsOptional()
     generation_id: number;
 
-    @Transform(params => params.value === '' ? null : +params.value)
+    @Transform(params => (params.value === '' || params.value === null) ? null : +params.value)
     @IsInt()
     @IsOptional()
     manufacturer_id: number;
 
-    @Transform(params => params.value === '' ? null : +params.value)
+    @Transform(params => (params.value === '' || params.value === null) ? null : +params.value)
     @IsInt()
     @IsOptional()
     category_id: number;
 
-    @Transform(params => params.value === '' ? null : params.value)
+    @Transform(params => (params.value === '' || params.value === null) ? null : +params.value)
     @IsOptional()
     @IsInt()
     price_id: number;
@@ -54,16 +54,20 @@ export class CreateAutopartDto {
 
     @Transform(params => params.value === '' ? null: params.value)
     @IsEnum(FrontBack)
+    @IsOptional()
     front_back: FrontBack;
 
     @Transform(params => params.value === '' || 'false' ? false: true)
     is_archive: boolean;
 
+    @Transform(params => params.value === '' ? null: params.value)
     @IsEnum(IsUsed)
+    @IsOptional()
     is_used: IsUsed; 
 
     @Transform(params => params.value === '' ? null: params.value)
     @IsEnum(Side)
+    @IsOptional()
     left_right: Side;
     
     @Transform(params => params.value === '' ? null: params.value)
@@ -81,7 +85,7 @@ export class CreateAutopartDto {
     @Transform(params => params.value === '' || 'false' ? false : true)
     not_for_export: boolean; 
 
-    @Transform(params => params.value === '' ? null: +params.value)
+    @Transform(params => (params.value === '' || params.value === null) ? null: +params.value)
     @IsInt()
     @IsOptional()
     number_of_part: number;
@@ -92,16 +96,15 @@ export class CreateAutopartDto {
     @Transform(params => params.value === '' ? null: params.value)
     old_data: string;
 
-    
-
     @Transform(params => params.value === '' ? null: params.value)
     site_link: string;
 
+    @Transform(params => params.value === '' ? null: params.value)
     @IsOptional()
     @IsEnum(Status)
     status: Status;
 
-    @Transform(params => params.value === '' ? null: +params.value)
+    @Transform(params => (params.value === '' || params.value === null) ? null: +params.value)
     @IsInt()
     @IsOptional()
     year: number;

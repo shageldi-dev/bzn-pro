@@ -23,7 +23,7 @@ export class AutopartsController {
   }))
   create(@UploadedFiles() files: Express.Multer.File[], @Body() body: CreateAutopartDto) {
     // return console.log(typeof files)
-    const fileNames = files.map(file => file.filename)
+    console.log(body)
     return this.autopartsService.create(body, files);
   }
 
