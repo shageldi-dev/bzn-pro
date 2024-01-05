@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, NotFoundException, Put, UseInterceptors, UploadedFiles, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, NotFoundException, Put, UseInterceptors, UploadedFiles, UploadedFile, Query } from '@nestjs/common';
 import { AutopartsService } from '../services/autoparts.service';
 import { CreateAutopartDto } from '../dto/create-autopart.dto';
 import { UpdateAutopartDto } from '../dto/update-autopart.dto';
@@ -32,8 +32,15 @@ export class AutopartsController {
     return this.autopartsService.findAll();
   }
 
-  
+  @Get("/autocomplete")
+  autocomplete(@Query('q') query: string) {
+    return this.autopartsService.autocomplete(query)
+  }
 
+  @Get("/count")
+  getCountByCrossNumber() {
+    return this.autopartsService.getCountByCrossNumber()
+  }
   
   @Get(':id')
   async findOne(@Param('id') id: string) {
@@ -57,7 +64,7 @@ export class AutopartsController {
 
   /* Image routes */
   @Post("/:id/images")
-  @UseInterceptors(FileInterceptor('image', {
+  @UseInterceptors(FilesInterceptor('image', 10, {
     storage: diskStorage({
       destination: './uploads/autopart-images',
       filename: (req, file, cb) => {
@@ -66,8 +73,9 @@ export class AutopartsController {
       }
     })
   }))
-  addImage(@UploadedFile() file: Express.Multer.File, @Param('id') autopart_id: string) {
-    return this.autopartsService.addImage(file, +autopart_id)
+  async addImages(@UploadedFiles() files: Express.Multer.File[], @Param('id') autopart_id: string) {
+    await this.autopartsService.addImages(files, +autopart_id)
+    return {message: "images added successfully"}
   }
 
   

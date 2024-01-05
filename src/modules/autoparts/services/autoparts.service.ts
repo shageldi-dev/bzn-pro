@@ -93,6 +93,20 @@ export class AutopartsService {
     return autopart;
   }
 
+  async autocomplete(query: string) {
+    return this.repo.createQueryBuilder('autopart')
+      .select('autopart.name')
+      .where(`autopart.name ILIKE '%${query}%'`)
+      .getMany()
+  }
+
+  async getCountByCrossNumber() {
+    return this.repo.createQueryBuilder('autopart')
+      .select('autopart.cross_number, COUNT(autopart_id) as count')
+      .groupBy('autopart.cross_number')
+      .getRawMany()
+  }
+
   async update(id: number, updateAutopartDto: UpdateAutopartDto) {
     const autoPart = await this.repo.findOneBy({autopart_id: id})
 
@@ -141,8 +155,8 @@ export class AutopartsService {
           new Uint8ClampedArray(data),
           info.width,
           info.height,
-          6,
-          6
+          3,
+          3
         );
         resolve(encoded);
 
@@ -153,8 +167,10 @@ export class AutopartsService {
   
   };
 
-  async addImage(file: Express.Multer.File, autopart_id: number) {
-    return this.saveImage(file, autopart_id)
+  async addImages(files: Express.Multer.File[], autopart_id: number) {
+    for (const file of files) {
+      await this.saveImage(file, autopart_id)
+    }
   }
 
   async saveImage(file: Express.Multer.File, autopart_id: number, is_main?: boolean) {
@@ -176,18 +192,18 @@ export class AutopartsService {
       throw new BadRequestException('unproccessable image')
     }
 
-    let blurhash;
+    /* let blurhash;
     try {
       blurhash = await this.generateBlurHash(filePath)
     } catch (error) {
       throw new InternalServerErrorException("failed generating blurhash")
-    }
+    } */
 
     const image = this.imageRepo.create({
       is_main: false, 
       src_original: '/autopart-images/' + file.filename,
       src_small: '/autopart-images/sm-' + file.filename,
-      blurhash: blurhash,
+      blurhash: "K6PZfSi_.A_3t7t7*0o#Dg",
       autopart_id: autopart_id
     })
 

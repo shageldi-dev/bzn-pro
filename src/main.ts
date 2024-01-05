@@ -12,6 +12,9 @@ async function bootstrap() {
   }));
   // app.useGlobalFilters(new GlobalExceptionFilter());
   app.enableCors();
-  await app.listen(process.env.API_PORT || 3030);
+
+    
+  const server = await app.listen(process.env.API_PORT || 3030);
+  server.setTimeout(25000)
 }
 bootstrap();

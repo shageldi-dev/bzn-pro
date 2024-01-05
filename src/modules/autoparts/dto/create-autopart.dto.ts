@@ -60,7 +60,7 @@ export class CreateAutopartDto {
     @Transform(params => params.value === '' || 'false' ? false: true)
     is_archive: boolean;
 
-    @Transform(params => params.value === '' ? null: params.value)
+    @Transform(params => params.value === '' ? IsUsed.NEW: params.value)
     @IsEnum(IsUsed)
     @IsOptional()
     is_used: IsUsed; 
