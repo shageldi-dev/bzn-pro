@@ -112,23 +112,23 @@ export class Autopart {
     /* RELATIONSHIPS */    
 
     @ManyToOne(() => Brand, brand => brand.autoparts)
-    @JoinColumn({name: 'brand_id'}) 
+    @JoinColumn({name: 'brand_id', referencedColumnName: "id", foreignKeyConstraintName: "fk_autopart_brand_id"}) 
     brand: Brand;
 
     @ManyToOne(() => Model, model => model.autoparts) 
-    @JoinColumn({name: 'model_id'})
+    @JoinColumn({name: 'model_id', referencedColumnName: 'id', foreignKeyConstraintName: 'fk_autopart_model_id'})
     model: Model
 
     @ManyToOne(() => Generation, generation => generation.autoparts)
-    @JoinColumn({name: 'generation_id'})
+    @JoinColumn({name: 'generation_id', referencedColumnName: 'id', foreignKeyConstraintName: 'fk_autopart_generation_id'})
     generation: Generation
    
     @ManyToOne(() => Manufacturer, manufacturer => manufacturer.autoparts)
-    @JoinColumn({name: 'manufacturer_id'})
+    @JoinColumn({name: 'manufacturer_id', referencedColumnName: 'id', foreignKeyConstraintName: 'fk_autopart_manufacturer_id'})
     manufacturer: Manufacturer;
 
     @ManyToOne(() => Category, category => category.autoparts)
-    @JoinColumn({name: 'category_id'})
+    @JoinColumn({name: 'category_id', referencedColumnName: 'id', foreignKeyConstraintName: 'fk_autopart_category_id'})
     category: Category;
 
     @OneToMany(() => Image, image => image.autopart)
