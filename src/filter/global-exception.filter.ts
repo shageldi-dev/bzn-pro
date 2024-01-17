@@ -1,11 +1,13 @@
 import {
   ArgumentsHost,
+  BadRequestException,
   Catch,
   ExceptionFilter,
   ForbiddenException,
   HttpException,
   HttpStatus,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import {
@@ -35,6 +37,18 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     switch (exception.constructor) {
       case HttpException:
         status = (exception as HttpException).getStatus();
+        break;
+      case BadRequestException:
+        status = 400;
+        message = (exception as any).response.message;
+        console.log("MESSAGE", message)
+        if (Array.isArray(message)) {
+          message = message.join(" | ")
+        }
+        break;
+      case NotFoundException:
+        status = 404;
+        message = (exception as NotFoundException).message;
         break;
       case QueryFailedError: // this is a TypeOrm error
         status = HttpStatus.UNPROCESSABLE_ENTITY;

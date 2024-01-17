@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsString } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateStorageDto {
 
@@ -15,6 +15,7 @@ export class CreateStorageDto {
     name_ru: string;
 
     @IsString()
+    @IsOptional()
     website: string;
 
     @IsString()

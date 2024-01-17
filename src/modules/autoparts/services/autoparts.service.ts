@@ -78,18 +78,125 @@ export class AutopartsService {
   }
 
   findAll(): Promise<Autopart[]> {
-    return this.repo.find({ relations: ['model', 'brand', 'generation'] });
+    return this.repo.createQueryBuilder('autopart')
+      .leftJoinAndSelect("autopart.brand", "brand")
+      .leftJoinAndSelect("autopart.model", "model")
+      .leftJoinAndSelect("autopart.generation", "generation")
+      .leftJoinAndSelect("autopart.images", "image")
+      .leftJoinAndSelect('autopart.manufacturer', 'manufacturer')
+      .leftJoinAndSelect('autopart.category', 'category')
+      .leftJoinAndSelect('autopart.price', 'price')
+      .select([
+        'autopart.autopart_id',
+        'autopart.name',
+        'autopart.color',
+        'autopart.comment',
+        'autopart.cross_number',
+        'autopart.is_archive',
+        'autopart.is_used',
+        'autopart.front_back',
+        'autopart.left_right',
+        'autopart.manufacturer_no',
+        'autopart.marking',
+        'autopart.note' ,
+        'autopart.not_for_export',
+        'autopart.number_of_part',
+        'autopart.old_bar_code',
+        'autopart.old_data' ,
+        'autopart.site_link',
+        'autopart.status',
+
+        'brand.id',
+        'brand.name',
+
+        'model.id',
+        'model.name',
+
+        'generation.id',
+        'generation.name',
+
+        'image.image_id',
+        'image.src_small',
+        'image.blurhash',
+        'image.is_main',
+
+        'manufacturer.id',
+        'manufacturer.name',
+
+        'category.id',
+        'category.name_tm',
+        'category.name_ru',
+        'category.name_en',
+
+        'price.id',
+        'price.price',
+      ]) 
+      .getMany()
   }
 
   async findOne(id: number) {
     const autopart = await this.repo.createQueryBuilder("autopart")
-    .leftJoinAndSelect("autopart.brand", "brand")
-    .leftJoinAndSelect("autopart.model", "model")
-    .leftJoinAndSelect("autopart.generation", "generation")
-    .leftJoinAndSelect("autopart.images", "image")
-    .where("autopart.autopart_id = :id", {id})
-    .getOne()
-    
+      .leftJoinAndSelect("autopart.brand", "brand")
+      .leftJoinAndSelect("autopart.model", "model")
+      .leftJoinAndSelect("autopart.generation", "generation")
+      .leftJoinAndSelect("autopart.images", "image")
+      .leftJoinAndSelect('autopart.manufacturer', 'manufacturer')
+      .leftJoinAndSelect('autopart.category', 'category')
+      .leftJoinAndSelect('autopart.price', 'price')
+      .select([
+        'autopart.autopart_id',
+        'autopart.name',
+        'autopart.color',
+        'autopart.comment',
+        'autopart.cross_number',
+        'autopart.is_archive',
+        'autopart.is_used',
+        'autopart.front_back',
+        'autopart.left_right',
+        'autopart.manufacturer_no',
+        'autopart.marking',
+        'autopart.note' ,
+        'autopart.not_for_export',
+        'autopart.number_of_part',
+        'autopart.old_bar_code',
+        'autopart.old_data' ,
+        'autopart.site_link',
+        'autopart.status',
+
+        'brand.id',
+        'brand.name',
+
+        'model.id',
+        'model.name',
+
+        'generation.id',
+        'generation.name',
+
+        'image.image_id',
+        'image.src_original',
+        'image.src_small',
+        'image.blurhash',
+        'image.is_main',
+
+        'manufacturer.id',
+        'manufacturer.name',
+
+        'category.id',
+        'category.name_tm',
+        'category.name_ru',
+        'category.name_en',
+
+        'price.id',
+        'price.price',
+        'price.old_price',
+        'price.sale_price',
+
+      ]) 
+      .where("autopart.autopart_id = :id", {id})
+      .getOne()
+
+      if (!autopart) throw new NotFoundException('autopart not found');
+
     return autopart;
   }
 
@@ -99,6 +206,14 @@ export class AutopartsService {
       .where(`autopart.name ILIKE '%${query}%'`)
       .getMany()
   }
+
+  async autocompleteByCrossNo(query: string) {
+    return this.repo.createQueryBuilder('autopart')
+      .select('autopart.cross_number')
+      .where(`autopart.cross_number ILIKE '%${query}%'`)
+      .getMany()
+  }
+
 
   async getCountByCrossNumber() {
     return this.repo.createQueryBuilder('autopart')

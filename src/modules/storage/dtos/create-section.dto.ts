@@ -9,7 +9,7 @@ export class CreateSectionDto {
  
     @IsNumber()
     @IsOptional()
-    autoart_group_id?: number;
+    autopart_group_id?: number;
 
     @IsNumber()
     @IsNotEmpty()
@@ -28,6 +28,7 @@ export class CreateSectionDto {
     name_ru: string;
 
     @IsNumber()
+    @IsOptional()
     section_number: number;
 
     @IsEnum(SectionType)
@@ -35,5 +36,6 @@ export class CreateSectionDto {
     section_type: SectionType;
 
     @IsNumber()
+    @IsOptional()
     space_count: number;
 }

@@ -11,8 +11,13 @@ export class SectionService {
         @InjectRepository(Section) private readonly sectionRepo: Repository<Section>
     ) {}
 
-    getAll() {
-        return this.sectionRepo.find()
+    async getAll() {
+        const sections = await this.sectionRepo
+        .createQueryBuilder('section')
+        .leftJoinAndSelect('section.children', 'children')
+        .getMany();
+
+        return this.buildTree(sections);
     }
 
     async getOneByID(id: number) {
@@ -49,5 +54,26 @@ export class SectionService {
         }
 
         return this.sectionRepo.remove(section)
+    }
+
+    private buildTree(sections: Section[]): Section[] {
+        const sectionMap = new Map<number, Section>();
+        const result: Section[] = [];
+
+        sections.forEach(section => {
+            sectionMap.set(section.id, { ...section, children: [] });
+        });
+
+        sectionMap.forEach(section => {
+            const parentId = section.parent_id;
+
+            if (parentId && sectionMap.has(parentId)) {
+            sectionMap.get(parentId).children.push(section);
+            } else {
+            result.push(section);
+            }
+        });
+
+        return result;
     }
 }

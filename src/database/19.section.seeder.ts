@@ -27,7 +27,7 @@ export default class CreateSections implements Seeder {
 
     // section id 2
     const section2 = sectionRepo.create({
-      parent_id: 2,
+      parent_id: 1,
       storage_id: 1,
       name_en: 'section2',
       name_ru: 'раздел 2',
@@ -41,7 +41,7 @@ export default class CreateSections implements Seeder {
 
     // section id 3
     const section3 = sectionRepo.create({
-      parent_id: 3,
+      parent_id: 2,
       storage_id: 1,
       name_en: 'section3',
       name_ru: 'раздел 3',

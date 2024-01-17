@@ -47,6 +47,7 @@ export class Autopart {
 
     /* NULLABLE COLUMNS */
 
+    
     @Column({nullable: true})
     color: string;
 

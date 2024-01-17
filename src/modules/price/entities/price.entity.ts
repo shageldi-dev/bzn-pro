@@ -39,6 +39,8 @@ export class Price {
     })
     updated_at: Date;
 
+    
+
     @OneToOne(() => Autopart, autopart => autopart.price, { onDelete: 'CASCADE'})
     @JoinColumn({name: ''})
     autopart: Autopart;       

@@ -13,7 +13,7 @@ export class Section {
     parent_id: number;
  
     @Column({nullable: true})
-    autoart_group_id: number;
+    autopart_group_id: number;
 
     @Column()
     storage_id: number;

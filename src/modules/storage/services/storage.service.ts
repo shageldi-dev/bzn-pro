@@ -12,14 +12,25 @@ export class StorageService {
     ) {}
 
     getAll() {
-        return this.storageRepo.find({relations: ['creator', 'updater']})
+        return this.storageRepo.createQueryBuilder("storage")
+            .select([
+                'storage.id',
+                'storage.name_tm',
+                'storage.name_ru',
+                'storage.name_en',
+                'storage.website',
+                'storage.phone',
+                'storage.is_issue_point',
+                'storage.is_income_point',
+            ])
+            .getMany();
     }
 
     async getById(id: number) {
         const storage = await this.storageRepo.createQueryBuilder("storage")
-        
         .leftJoinAndSelect("storage.updater", "updater")
         .leftJoinAndSelect("storage.creator", "creator")
+        .leftJoinAndSelect("storage.sections", "section")
         .select([
             "storage.id",
             "storage.name_tm",
@@ -35,8 +46,19 @@ export class StorageService {
 	        "is_hidden",
 	        "is_issue_point",
 	        "is_income_point",
+
+            "section.id",
+            "section.name_tm",
+            "section.name_ru",
+            "section.name_en",
+            "section.section_type",
+            "section.section_number",
+
+            "updater.id",
             "updater.name",
             "updater.email",
+
+            "creator.id",
             "creator.name",
             "creator.email" 
             

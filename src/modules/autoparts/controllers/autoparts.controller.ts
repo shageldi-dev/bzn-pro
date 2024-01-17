@@ -37,6 +37,11 @@ export class AutopartsController {
     return this.autopartsService.autocomplete(query)
   }
 
+  @Get("/autocomplete-cross")
+  autocompleteByCrossNo(@Query('q') query: string) {
+    return this.autopartsService.autocompleteByCrossNo(query)
+  }
+
   @Get("/count")
   getCountByCrossNumber() {
     return this.autopartsService.getCountByCrossNumber()
